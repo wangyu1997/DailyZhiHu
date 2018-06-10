@@ -8,7 +8,7 @@ target 'DrWy' do
   pod 'Alamofire', '~> 4.7.2'
   pod 'AlamofireImage', '~> 3.3.1'
   pod 'GTMRefresh', '~> 1.3.3'
-
+  pod 'ZCycleView', '~> 0.0.5'
   # Pods for DrWy
 
   target 'DrWyTests' do
