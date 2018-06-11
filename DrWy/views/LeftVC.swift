@@ -72,13 +72,17 @@ extension LeftVC:UITableViewDelegate,UITableViewDataSource{
         let other = self.themes!.others[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "leftCell", for: indexPath) as! LeftCell
         let title = other.name
-        cell.theme_title.text = title
+        cell.data = other
+        cell.theme_title.text = title    
         // Configure the cell...
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        SwiftNotice.noticeOnStatusBar("你选中了\(themes?.others[indexPath.row].name ?? "")", autoClear: true, autoClearTime: 2000)
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    
 }

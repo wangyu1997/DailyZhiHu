@@ -54,9 +54,10 @@ class HomeVC: UITableViewController {
         cycleView = ZCycleView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 250))
 //        cycleView.placeholderImage = UIImage(named: "placeholder")
         cycleView.timeInterval = 5
+        cycleView.titleNumberOfLines = 2
         cycleView.pageControlIsHidden = true
-        cycleView.titleViewHeight = 40
-        cycleView.titleFont = .systemFont(ofSize: 16)
+        cycleView.titleViewHeight = 60
+        cycleView.titleFont = .systemFont(ofSize: 18)
         tableView.tableHeaderView = cycleView
         cycleView.didSelectedItem = {
             index in

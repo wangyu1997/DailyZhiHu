@@ -15,8 +15,9 @@ class Constant {}
 let screenBounds = UIScreen.main.bounds
 let screenWidth = UIScreen.main.bounds.width
 let screenHeight = UIScreen.main.bounds.height
-let DrawerMaxWidth:CGFloat = screenWidth/7.0*6.0
+let DrawerMaxWidth:CGFloat = screenWidth/8.0*6.0
 let imageHeight:CGFloat = 200.0
+
 
 let news_api = "https://news-at.zhihu.com/api/4/news/"
 
