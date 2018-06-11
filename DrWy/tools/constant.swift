@@ -18,4 +18,6 @@ let screenHeight = UIScreen.main.bounds.height
 let DrawerMaxWidth:CGFloat = screenWidth/7.0*6.0
 let imageHeight:CGFloat = 200.0
 
-let news_api = "https://news-at.zhihu.com/api/3/news/"
+let news_api = "https://news-at.zhihu.com/api/4/news/"
+
+let themes_api = "https://news-at.zhihu.com/api/4/themes"

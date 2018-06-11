@@ -6,36 +6,39 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
-        <scene sceneID="n8S-kJ-Gao">
+        <!--LeftVC-->
+        <scene sceneID="nL1-Mo-1bC">
             <objects>
-                <tableViewController storyboardIdentifier="leftMenu" id="H1x-pg-0ue" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="GAf-ua-2J3">
+                <viewController storyboardIdentifier="leftMenu" id="flG-LA-sY5" customClass="LeftVC" customModule="DrWy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="foE-KS-dxs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vjD-7C-Lzr">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="WoZ-nV-Sih">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WoZ-nV-Sih" id="hRS-25-rnS">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="H1x-pg-0ue" id="ypv-YH-0RE"/>
-                            <outlet property="delegate" destination="H1x-pg-0ue" id="Hni-bu-3dK"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Wsr-pa-v49" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <constraints>
+                            <constraint firstItem="vjD-7C-Lzr" firstAttribute="leading" secondItem="LMg-AH-oUk" secondAttribute="leading" id="3QB-mf-KXu"/>
+                            <constraint firstItem="LMg-AH-oUk" firstAttribute="trailing" secondItem="vjD-7C-Lzr" secondAttribute="trailing" id="G61-yf-Zg3"/>
+                            <constraint firstItem="LMg-AH-oUk" firstAttribute="bottom" secondItem="vjD-7C-Lzr" secondAttribute="bottom" id="e4X-Ys-baC"/>
+                            <constraint firstItem="vjD-7C-Lzr" firstAttribute="top" secondItem="LMg-AH-oUk" secondAttribute="top" id="n98-lU-fF9"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="LMg-AH-oUk"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="vjD-7C-Lzr" id="Vwc-CZ-z8J"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RhJ-74-jbz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-444" y="610"/>
+            <point key="canvasLocation" x="-434" y="656"/>
         </scene>
         <!--Popular-->
         <scene sceneID="2Ch-do-ifw">
