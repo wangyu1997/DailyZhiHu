@@ -25,7 +25,7 @@ class LeftCell: UITableViewCell {
     }
     
     @IBAction func follow_action(_ sender: UIButton) {
-        SwiftNotice.noticeOnStatusBar("你follow了\(data?.name! ?? "")", autoClear: true, autoClearTime: 2000)
+        SwiftNotice.noticeOnStatusBar("你follow了\(data?.name! ?? "")", autoClear: true, autoClearTime: 2)
     }
     
 }

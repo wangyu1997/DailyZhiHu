@@ -55,7 +55,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zex-eq-8YL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="460" y="609"/>
+            <point key="canvasLocation" x="466" y="609"/>
         </scene>
         <!--今日新闻-->
         <scene sceneID="RPq-ld-trj">
@@ -81,10 +81,44 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="今日新闻" id="yNU-ng-bBx"/>
+                    <connections>
+                        <outlet property="webView" destination="Y4M-cW-kgA" id="XSR-04-L0V"/>
+                        <segue destination="aFG-UF-GQA" kind="show" identifier="showDetail" id="HQP-AY-L7o"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bYI-mb-SGm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1430" y="609"/>
+            <point key="canvasLocation" x="1346" y="609"/>
+        </scene>
+        <!--News DetailVC-->
+        <scene sceneID="pAy-kK-PWz">
+            <objects>
+                <viewController id="aFG-UF-GQA" customClass="NewsDetailVC" customModule="DrWy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gvR-XG-LYx" customClass="NewsD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btC-ig-RGB">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="btC-ig-RGB" firstAttribute="top" secondItem="sOI-OK-qQ4" secondAttribute="top" id="0hI-4Z-HFq"/>
+                            <constraint firstItem="btC-ig-RGB" firstAttribute="leading" secondItem="sOI-OK-qQ4" secondAttribute="leading" id="70d-nH-drL"/>
+                            <constraint firstItem="btC-ig-RGB" firstAttribute="trailing" secondItem="sOI-OK-qQ4" secondAttribute="trailing" id="Bbl-kk-Mve"/>
+                            <constraint firstItem="btC-ig-RGB" firstAttribute="bottom" secondItem="sOI-OK-qQ4" secondAttribute="bottom" id="ebA-hJ-Keh"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sOI-OK-qQ4"/>
+                    </view>
+                    <connections>
+                        <outlet property="webview" destination="btC-ig-RGB" id="6jy-eL-zRr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BGw-f5-fDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2080.8000000000002" y="608.54572713643188"/>
         </scene>
     </scenes>
 </document>

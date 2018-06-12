@@ -48,7 +48,7 @@ class LeftVC: UIViewController {
                     let themes = Themes(fromDictionary: json)
                     completion(themes)
                 case .failure(_):
-                    SwiftNotice.showNoticeWithText(.error, text: "加载数据失败", autoClear: true, autoClearTime: 3000)
+                    SwiftNotice.showNoticeWithText(.error, text: "加载数据失败", autoClear: true, autoClearTime: 3)
                 }
         }
     }
@@ -80,7 +80,7 @@ extension LeftVC:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        SwiftNotice.noticeOnStatusBar("你选中了\(themes?.others[indexPath.row].name ?? "")", autoClear: true, autoClearTime: 2000)
+        SwiftNotice.noticeOnStatusBar("你选中了\(themes?.others[indexPath.row].name ?? "")", autoClear: true, autoClearTime: 2)
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
     

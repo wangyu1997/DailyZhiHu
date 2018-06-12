@@ -14,8 +14,10 @@ import ZCycleView
 
 class HomeVC: UITableViewController {
     
+    @IBOutlet var webView: UITableView!
     var datas: [Story] = []
     var cycleView: ZCycleView!
+    var top_storys:[TopStory] = []
     var top_titles:[String] = []
     var top_images:[String] = []
     
@@ -28,6 +30,10 @@ class HomeVC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.navigationController?.view.bringSubview(toFront: (self.navigationController?.navigationBar)!)
     }
     
     func setUpTableView(){
@@ -52,7 +58,6 @@ class HomeVC: UITableViewController {
         self.tableView.showsVerticalScrollIndicator = false
         
         cycleView = ZCycleView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 250))
-//        cycleView.placeholderImage = UIImage(named: "placeholder")
         cycleView.timeInterval = 5
         cycleView.titleNumberOfLines = 2
         cycleView.pageControlIsHidden = true
@@ -61,7 +66,8 @@ class HomeVC: UITableViewController {
         tableView.tableHeaderView = cycleView
         cycleView.didSelectedItem = {
             index in
-             print("选择了第\(index)张图片")
+            let story_id = self.top_storys[index].id!
+            self.performSegue(withIdentifier: "showDetail", sender: story_id)
         }
 
     }
@@ -108,6 +114,7 @@ class HomeVC: UITableViewController {
                    let storys = StoryList(fromDictionary: json)
                     self.datas = storys.stories
                     load_flag = true
+                    self.top_storys = storys.topStories
                     self.top_images = []
                     self.top_titles = []
                     for item in storys.topStories{
@@ -145,6 +152,18 @@ class HomeVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
+        
+        let story = self.datas[indexPath.row]
+        
+        self.performSegue(withIdentifier: "showDetail", sender: story.id!)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail"{
+            let controller = segue.destination as! NewsDetailVC
+            controller.story_id = sender as? Int
+        }
     }
     
 }
