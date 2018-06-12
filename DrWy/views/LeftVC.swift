@@ -62,27 +62,37 @@ extension LeftVC:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let index = self.themes?.others?.count{
-            return index
+            return index+1
         }else{
-            return 0
+            return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let other = self.themes!.others[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "leftCell", for: indexPath) as! LeftCell
-        let title = other.name
-        cell.data = other
+        var title:String
+        if indexPath.row == 0 {
+            title = "首页"
+        }else{
+            let other = self.themes!.others[indexPath.row-1]
+            title = other.name
+            cell.data = other
+        }
+        
         cell.theme_title.text = title    
-        // Configure the cell...
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        SwiftNotice.noticeOnStatusBar("你选中了\(themes?.others[indexPath.row].name ?? "")", autoClear: true, autoClearTime: 2)
+        let mainVc = (DrawerMainVC.drawerVC?.mainVC as! UINavigationController).visibleViewController as! HomeVC
+        if indexPath.row==0 {
+            mainVc.refreshData(url: news_api+"latest", is_cover_page: true)
+        }else{
+            print(theme_list_api+"\(self.themes?.others[indexPath.row-1].id! ?? 0)")
+            mainVc.refreshData(url: theme_list_api+"\(self.themes?.others[indexPath.row-1].id! ?? 0)", is_cover_page: true)
+        }
+        DrawerMainVC.drawerVC?.closeSideBar()
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    
 }

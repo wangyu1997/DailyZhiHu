@@ -24,10 +24,12 @@ let news_api = "https://news-at.zhihu.com/api/4/news/"
 
 let themes_api = "https://news-at.zhihu.com/api/4/themes"
 
+let theme_list_api = "https://news-at.zhihu.com/api/4/theme/"
+
 let news_detail_api = "https://news-at.zhihu.com/api/4/news/"
 
 
-func GetData(url:String,completion: @escaping (Any?) -> Void) {
+func GetData(url:String,completion: @escaping (Any?) -> Void,fail:@escaping () -> Void) {
     Alamofire.request(url,method:.get, parameters: nil, encoding: JSONEncoding.default)
         .validate(contentType: ["application/json"])
         .responseJSON { response in
@@ -37,7 +39,7 @@ func GetData(url:String,completion: @escaping (Any?) -> Void) {
                 //example if there is an id
                 completion(json)
             case .failure(_):
-                SwiftNotice.showNoticeWithText(.error, text: "加载数据失败", autoClear: true, autoClearTime: 3)
+                fail()
             }
     }
 }

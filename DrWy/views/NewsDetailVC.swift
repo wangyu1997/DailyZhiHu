@@ -20,13 +20,15 @@ class NewsDetailVC: UIViewController {
         setUpWebView()
         let url = "\(news_detail_api)\(story_id!)"
         print(url)
-        SwiftNotice.load()
+        self.pleaseWait()
         GetData(url:url,completion: {
             (json) in
             self.newsDetail = NewsDetailNormal(fromDictionary: json! as! NSDictionary)
             let body_html = createHtmlData(html: self.newsDetail.body!, cssList: self.newsDetail.css!, jsList: self.newsDetail.js!)
             self.webview.loadHTMLString(body_html, baseURL: nil)
-            SwiftNotice.clear()
+            self.clearAllNotice()
+        },fail:{
+            self.noticeError("加载数据失败", autoClear: true, autoClearTime: 3)
         })
         
         //        self.navigationController?.setNavigationBarHidden(true, animated: true)

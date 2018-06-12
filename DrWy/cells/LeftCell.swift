@@ -25,7 +25,11 @@ class LeftCell: UITableViewCell {
     }
     
     @IBAction func follow_action(_ sender: UIButton) {
-        SwiftNotice.noticeOnStatusBar("你follow了\(data?.name! ?? "")", autoClear: true, autoClearTime: 2)
+        if theme_title.text == "首页" {
+            self.noticeTop("选择首页", autoClear: true, autoClearTime: 3)
+        }else{
+           self.noticeTop("你follow了\(data?.name! ?? "")", autoClear: true, autoClearTime: 2)
+        }
     }
     
 }

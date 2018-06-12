@@ -14,6 +14,8 @@ import ZCycleView
 
 class HomeVC: UITableViewController {
     
+    var is_cover_page:Bool!
+    
     @IBOutlet var webView: UITableView!
     var datas: [Story] = []
     var cycleView: ZCycleView!
@@ -25,6 +27,7 @@ class HomeVC: UITableViewController {
         super.viewDidLoad()
         let nib = UINib.init(nibName: "HomeCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "homeCell")        // Uncomment the following line to preserve selection between presentations
+        is_cover_page = true
         self.setUpTableView()
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -57,24 +60,23 @@ class HomeVC: UITableViewController {
         self.tableView.triggerRefreshing()
         self.tableView.showsVerticalScrollIndicator = false
         
-        cycleView = ZCycleView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 250))
-        cycleView.timeInterval = 5
-        cycleView.titleNumberOfLines = 2
-        cycleView.pageControlIsHidden = true
-        cycleView.titleViewHeight = 60
-        cycleView.titleFont = .systemFont(ofSize: 18)
-        tableView.tableHeaderView = cycleView
-        cycleView.didSelectedItem = {
+        self.cycleView = ZCycleView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 250))
+        self.cycleView.timeInterval = 5
+        self.cycleView.titleNumberOfLines = 2
+        self.cycleView.pageControlIsHidden = true
+        self.cycleView.titleViewHeight = 60
+        self.cycleView.titleFont = .systemFont(ofSize: 18)
+        self.cycleView.didSelectedItem = {
             index in
             let story_id = self.top_storys[index].id!
             self.performSegue(withIdentifier: "showDetail", sender: story_id)
         }
-
+        self.tableView.tableHeaderView = self.cycleView
     }
     
     
     func refresh() {
-        refreshData()
+        refreshData(url:news_api+"latest",is_cover_page:true)
     }
     
     func loadMore() {
@@ -101,46 +103,60 @@ class HomeVC: UITableViewController {
         return datas.count
     }
     
-    func refreshData()  {
-        let url = news_api+"latest"
-        Alamofire.request(url,method:.get, parameters: nil, encoding: JSONEncoding.default)
-            .validate(contentType: ["application/json"])
-            .responseJSON { response in
-                var load_flag = false
-                switch response.result {
-                case .success(let JSON):
-                    let json = JSON as! NSDictionary
-                    //example if there is an id
-                   let storys = StoryList(fromDictionary: json)
-                    self.datas = storys.stories
-                    load_flag = true
-                    self.top_storys = storys.topStories
-                    self.top_images = []
-                    self.top_titles = []
-                    for item in storys.topStories{
-                        self.top_titles.append(item.title)
-                        self.top_images.append(item.image)
-                    }
-                    OperationQueue.main.addOperation {
-                        self.tableView.reloadData()
-                        self.refreshControl?.endRefreshing()
-                        self.cycleView.setUrlsGroup(self.top_images, titlesGroup:self.top_titles)
-                    }
-                case .failure(_):
-                    load_flag = false
+    func refreshData(url:String,is_cover_page:Bool)  {
+        GetData(url: url, completion: {
+            (json) in
+            let data = json! as! NSDictionary
+            self.is_cover_page = is_cover_page
+            if is_cover_page{
+                let storys = StoryList(fromDictionary: data)
+                self.datas = storys.stories
+                self.top_storys = storys.topStories
+                self.top_images = []
+                self.top_titles = []
+                for item in storys.topStories{
+                    self.top_titles.append(item.title)
+                    self.top_images.append(item.image)
                 }
+                self.cycleView.setUrlsGroup(self.top_images, titlesGroup:self.top_titles)
                 OperationQueue.main.addOperation {
-                    self.tableView.endRefreshing(isSuccess: load_flag)
+                    self.tableView.tableHeaderView = self.cycleView
+                    self.cycleView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 250)
                 }
-        }
+            }else{
+                let themes_storys = ThemeList(fromDictionary: data)
+                self.datas = themes_storys.stories
+                self.title = themes_storys.name
+                OperationQueue.main.addOperation {
+                    let view = UIView(frame: .zero)
+                    self.tableView.tableHeaderView = view
+                    self.cycleView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 0.0000001)
+                }
+            }
+            OperationQueue.main.addOperation {
+                self.tableView.reloadData()
+                self.refreshControl?.endRefreshing()
+                self.tableView.endRefreshing(isSuccess:true)
+            }
+        }, fail: {
+            OperationQueue.main.addOperation {
+                self.noticeError("加载失败", autoClear: true, autoClearTime: 3)
+                self.tableView.endRefreshing(isSuccess:false)
+            }
+        })
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let story = datas[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "homeCell", for: indexPath) as! HomeCell
-        let url = URL(string: story.images[0])!
-        cell.picImg.af_setImage(withURL: url)
+        if let images = story.images, images.count>0{
+            let url = URL(string: story.images[0])!
+            cell.picImg.af_setImage(withURL: url)
+            cell.picImg.isHidden = false
+        }else{
+            cell.picImg.isHidden = true
+        }
         cell.title.numberOfLines = 2
         cell.title.text = story.title
     

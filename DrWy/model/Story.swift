@@ -1,7 +1,7 @@
 //
 //	Story.swift
 //
-//	Create by yu wang on 10/6/2018
+//	Create by yu wang on 12/6/2018
 //	Copyright © 2018. All rights reserved.
 //	Model file generated using JSONExport: https://github.com/Ahmed-Ali/JSONExport
 
@@ -9,7 +9,6 @@ import Foundation
 
 struct Story{
 
-	var gaPrefix : String!
 	var id : Int!
 	var images : [String]!
 	var title : String!
@@ -20,7 +19,6 @@ struct Story{
 	 * Instantiate the instance using the passed dictionary values to set the properties values
 	 */
 	init(fromDictionary dictionary: NSDictionary){
-		gaPrefix = dictionary["ga_prefix"] as? String
 		id = dictionary["id"] as? Int
 		images = dictionary["images"] as? [String]
 		title = dictionary["title"] as? String
@@ -32,10 +30,7 @@ struct Story{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-        let dictionary = NSMutableDictionary()
-		if gaPrefix != nil{
-			dictionary["ga_prefix"] = gaPrefix
-		}
+		var dictionary = NSMutableDictionary()
 		if id != nil{
 			dictionary["id"] = id
 		}
