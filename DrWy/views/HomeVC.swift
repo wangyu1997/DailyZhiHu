@@ -71,6 +71,7 @@ class HomeVC: UITableViewController {
             let story_id = self.top_storys[index].id!
             self.performSegue(withIdentifier: "showDetail", sender: story_id)
         }
+//        self.tableView.addObserver(nil, forKeyPath: "contentOffset", options: .new, context: nil)
         self.tableView.tableHeaderView = self.cycleView
     }
     
@@ -120,17 +121,19 @@ class HomeVC: UITableViewController {
                 }
                 self.cycleView.setUrlsGroup(self.top_images, titlesGroup:self.top_titles)
                 OperationQueue.main.addOperation {
-                    self.tableView.tableHeaderView = self.cycleView
-                    self.cycleView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 250)
+                    self.tableView.sectionHeaderHeight = 250
+//                    self.tableView.tableHeaderView = self.cycleView
+//                    self.cycleView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 250)
                 }
             }else{
                 let themes_storys = ThemeList(fromDictionary: data)
                 self.datas = themes_storys.stories
                 self.title = themes_storys.name
                 OperationQueue.main.addOperation {
-                    let view = UIView(frame: .zero)
-                    self.tableView.tableHeaderView = view
-                    self.cycleView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 0.0000001)
+                    self.tableView.sectionHeaderHeight = 0
+//                    let view = UIView(frame: .zero)
+//                    self.tableView.tableHeaderView = view
+//                    self.cycleView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 0.0000001)
                 }
             }
             OperationQueue.main.addOperation {
@@ -154,8 +157,14 @@ class HomeVC: UITableViewController {
             let url = URL(string: story.images[0])!
             cell.picImg.af_setImage(withURL: url)
             cell.picImg.isHidden = false
+            if cell.titleConstraint.constant < 30 {
+                cell.titleConstraint.constant = cell.titleConstraint.constant + cell.picImg.bounds.width
+            }
         }else{
             cell.picImg.isHidden = true
+            if cell.titleConstraint.constant == 30 {
+                cell.titleConstraint.constant = cell.titleConstraint.constant-cell.picImg.bounds.width
+            }
         }
         cell.title.numberOfLines = 2
         cell.title.text = story.title

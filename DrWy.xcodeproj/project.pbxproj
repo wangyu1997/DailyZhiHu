@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		19F548DADAC63F129D52849F /* Pods_DrWy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F04FA912C7ABEEBC8C240A05 /* Pods_DrWy.framework */; };
 		65A7EEB756942CBC9204C8DF /* Pods_DrWyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D939E21122EEB7D9D509C4D /* Pods_DrWyUITests.framework */; };
+		880903A620D0C75100FD73BA /* ParallaxHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880903A520D0C75100FD73BA /* ParallaxHeaderView.swift */; };
 		888A541320D01CC2009AD7AA /* ThemeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A541120D01CC1009AD7AA /* ThemeList.swift */; };
 		888A541420D01CC2009AD7AA /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A541220D01CC1009AD7AA /* Editor.swift */; };
 		88A0AA4B20CD3CD900566867 /* DrawerMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A0AA4A20CD3CD900566867 /* DrawerMainVC.swift */; };
@@ -60,6 +61,7 @@
 		07B113F4B89BD4CC5B810B08 /* Pods-DrWy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrWy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DrWy/Pods-DrWy.debug.xcconfig"; sourceTree = "<group>"; };
 		3D5870752CB0EE79483B1F4E /* Pods-DrWy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrWy.release.xcconfig"; path = "Pods/Target Support Files/Pods-DrWy/Pods-DrWy.release.xcconfig"; sourceTree = "<group>"; };
 		621AD9B09B677005A9322DAE /* Pods-DrWyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrWyUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DrWyUITests/Pods-DrWyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		880903A520D0C75100FD73BA /* ParallaxHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxHeaderView.swift; sourceTree = "<group>"; };
 		888A541120D01CC1009AD7AA /* ThemeList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeList.swift; sourceTree = "<group>"; };
 		888A541220D01CC1009AD7AA /* Editor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
 		88A0AA4A20CD3CD900566867 /* DrawerMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerMainVC.swift; sourceTree = "<group>"; };
@@ -142,6 +144,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		880903A720D0C75600FD73BA /* wiget */ = {
+			isa = PBXGroup;
+			children = (
+				880903A520D0C75100FD73BA /* ParallaxHeaderView.swift */,
+			);
+			path = wiget;
+			sourceTree = "<group>";
+		};
 		88A0AA4920CD3CBB00566867 /* drawer */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +211,7 @@
 		88BE216020CC0D43006E2F5F /* DrWy */ = {
 			isa = PBXGroup;
 			children = (
+				880903A720D0C75600FD73BA /* wiget */,
 				88A0AA5920CD547600566867 /* cells */,
 				88A0AA4C20CD4B2300566867 /* model */,
 				88BE219520CC1184006E2F5F /* views */,
@@ -493,6 +504,7 @@
 				88A0AA5720CD547200566867 /* HomeCell.swift in Sources */,
 				88A0AA4B20CD3CD900566867 /* DrawerMainVC.swift in Sources */,
 				888A541320D01CC2009AD7AA /* ThemeList.swift in Sources */,
+				880903A620D0C75100FD73BA /* ParallaxHeaderView.swift in Sources */,
 				88B6209C20CFF80000793125 /* NewsDetailVC.swift in Sources */,
 				88A0AA5020CD4B3600566867 /* StorysList.swift in Sources */,
 				88E11F7E20CE403D005F4286 /* Themes.swift in Sources */,

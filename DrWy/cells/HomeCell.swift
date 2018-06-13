@@ -12,6 +12,7 @@ class HomeCell: UITableViewCell {
 
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var picImg: UIImageView!
+    @IBOutlet weak var titleConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,7 +21,6 @@ class HomeCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     

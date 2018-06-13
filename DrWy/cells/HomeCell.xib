@@ -61,6 +61,7 @@
             <connections>
                 <outlet property="picImg" destination="Oxo-Cn-u2U" id="lW8-2F-cxi"/>
                 <outlet property="title" destination="6FJ-jc-7bS" id="Yn7-YC-9ZT"/>
+                <outlet property="titleConstraint" destination="Mme-wb-nK4" id="1pD-W3-Bef"/>
             </connections>
             <point key="canvasLocation" x="-236" y="70"/>
         </tableViewCell>
