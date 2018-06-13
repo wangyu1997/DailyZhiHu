@@ -57,7 +57,7 @@
             </objects>
             <point key="canvasLocation" x="466" y="609"/>
         </scene>
-        <!--今日新闻-->
+        <!--今日热闻-->
         <scene sceneID="RPq-ld-trj">
             <objects>
                 <tableViewController id="okF-Je-Xgu" customClass="HomeVC" customModule="DrWy" customModuleProvider="target" sceneMemberID="viewController">
@@ -80,7 +80,7 @@
                             <outlet property="delegate" destination="okF-Je-Xgu" id="AWy-Ep-caZ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="今日新闻" id="yNU-ng-bBx"/>
+                    <navigationItem key="navigationItem" title="今日热闻" id="yNU-ng-bBx"/>
                     <connections>
                         <outlet property="webView" destination="Y4M-cW-kgA" id="XSR-04-L0V"/>
                         <segue destination="aFG-UF-GQA" kind="show" identifier="showDetail" id="HQP-AY-L7o"/>

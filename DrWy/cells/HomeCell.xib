@@ -23,7 +23,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="354" height="90"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6FJ-jc-7bS">
-                                <rect key="frame" x="30" y="20.5" width="208" height="50"/>
+                                <rect key="frame" x="15" y="20.5" width="238" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="7gf-od-HMc"/>
                                 </constraints>
@@ -41,9 +41,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="6FJ-jc-7bS" firstAttribute="leading" secondItem="tv6-jv-kCN" secondAttribute="leading" constant="30" id="19l-dX-LPQ"/>
+                            <constraint firstItem="6FJ-jc-7bS" firstAttribute="leading" secondItem="tv6-jv-kCN" secondAttribute="leading" constant="15" id="19l-dX-LPQ"/>
                             <constraint firstItem="Oxo-Cn-u2U" firstAttribute="centerY" secondItem="tv6-jv-kCN" secondAttribute="centerY" id="9ua-Rd-k1Q"/>
-                            <constraint firstItem="Oxo-Cn-u2U" firstAttribute="leading" secondItem="6FJ-jc-7bS" secondAttribute="trailing" constant="30" id="Mme-wb-nK4"/>
+                            <constraint firstItem="Oxo-Cn-u2U" firstAttribute="leading" secondItem="6FJ-jc-7bS" secondAttribute="trailing" constant="15" id="Mme-wb-nK4"/>
                             <constraint firstAttribute="trailing" secondItem="Oxo-Cn-u2U" secondAttribute="trailing" constant="16" id="Vsg-2v-hAH"/>
                             <constraint firstItem="6FJ-jc-7bS" firstAttribute="centerY" secondItem="tv6-jv-kCN" secondAttribute="centerY" id="XHH-UO-fkq"/>
                             <constraint firstAttribute="height" constant="90" id="tkY-u5-fxo"/>
@@ -62,6 +62,7 @@
                 <outlet property="picImg" destination="Oxo-Cn-u2U" id="lW8-2F-cxi"/>
                 <outlet property="title" destination="6FJ-jc-7bS" id="Yn7-YC-9ZT"/>
                 <outlet property="titleConstraint" destination="Mme-wb-nK4" id="1pD-W3-Bef"/>
+                <outlet property="view" destination="tv6-jv-kCN" id="qeQ-3B-SG2"/>
             </connections>
             <point key="canvasLocation" x="-236" y="70"/>
         </tableViewCell>

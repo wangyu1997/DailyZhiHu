@@ -15,6 +15,7 @@ import ZCycleView
 class HomeVC: UITableViewController {
     
     var is_cover_page:Bool!
+    var refresh_url:String!
     
     @IBOutlet var webView: UITableView!
     var datas: [Story] = []
@@ -27,6 +28,7 @@ class HomeVC: UITableViewController {
         super.viewDidLoad()
         let nib = UINib.init(nibName: "HomeCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "homeCell")        // Uncomment the following line to preserve selection between presentations
+        self.refresh_url = news_api+"latest"
         is_cover_page = true
         self.setUpTableView()
         // self.clearsSelectionOnViewWillAppear = false
@@ -48,7 +50,7 @@ class HomeVC: UITableViewController {
         self.tableView.gtm_addRefreshHeaderView {
             [weak self] in
             print("excute refreshBlock")
-            self?.refresh()
+            self?.refreshData()
         }
         
         self.tableView.gtm_addLoadMoreFooterView {
@@ -75,11 +77,6 @@ class HomeVC: UITableViewController {
         self.tableView.tableHeaderView = self.cycleView
     }
     
-    
-    func refresh() {
-        refreshData(url:news_api+"latest",is_cover_page:true)
-    }
-    
     func loadMore() {
         OperationQueue.main.addOperation {
             self.tableView.endLoadMore(isNoMoreData: true)
@@ -104,12 +101,17 @@ class HomeVC: UITableViewController {
         return datas.count
     }
     
-    func refreshData(url:String,is_cover_page:Bool)  {
-        GetData(url: url, completion: {
+    func setDataAndRefresh(url:String,is_cover_page:Bool) {
+        self.refresh_url = url
+        self.is_cover_page = is_cover_page
+        self.tableView.triggerRefreshing()
+    }
+    
+    func refreshData()  {
+        GetData(url: self.refresh_url, completion: {
             (json) in
             let data = json! as! NSDictionary
-            self.is_cover_page = is_cover_page
-            if is_cover_page{
+            if self.is_cover_page{
                 let storys = StoryList(fromDictionary: data)
                 self.datas = storys.stories
                 self.top_storys = storys.topStories
@@ -121,18 +123,19 @@ class HomeVC: UITableViewController {
                 }
                 self.cycleView.setUrlsGroup(self.top_images, titlesGroup:self.top_titles)
                 OperationQueue.main.addOperation {
+                    self.title = "今日热闻"
                     self.tableView.sectionHeaderHeight = 250
-//                    self.tableView.tableHeaderView = self.cycleView
-//                    self.cycleView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 250)
+                    self.tableView.tableHeaderView = self.cycleView
                 }
             }else{
                 let themes_storys = ThemeList(fromDictionary: data)
                 self.datas = themes_storys.stories
                 self.title = themes_storys.name
                 OperationQueue.main.addOperation {
+                    self.title = themes_storys.name
                     self.tableView.sectionHeaderHeight = 0
 //                    let view = UIView(frame: .zero)
-//                    self.tableView.tableHeaderView = view
+                    self.tableView.tableHeaderView = nil
 //                    self.cycleView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 0.0000001)
                 }
             }
@@ -153,17 +156,21 @@ class HomeVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let story = datas[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "homeCell", for: indexPath) as! HomeCell
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+//        cell.layoutMargins.left = 15
+//        cell.layoutMargins.right = 15
+        cell.preservesSuperviewLayoutMargins = false
         if let images = story.images, images.count>0{
             let url = URL(string: story.images[0])!
             cell.picImg.af_setImage(withURL: url)
             cell.picImg.isHidden = false
-            if cell.titleConstraint.constant < 30 {
-                cell.titleConstraint.constant = cell.titleConstraint.constant + cell.picImg.bounds.width
+            if cell.titleConstraint.constant < 15 {
+                cell.titleConstraint.constant = 15
             }
         }else{
             cell.picImg.isHidden = true
-            if cell.titleConstraint.constant == 30 {
-                cell.titleConstraint.constant = cell.titleConstraint.constant-cell.picImg.bounds.width
+            if cell.titleConstraint.constant == 15 {
+                cell.titleConstraint.constant = -cell.picImg.bounds.width
             }
         }
         cell.title.numberOfLines = 2
