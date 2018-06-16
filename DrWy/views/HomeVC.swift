@@ -18,7 +18,7 @@ class HomeVC: UITableViewController {
     var refresh_url:String!
     
     @IBOutlet var webView: UITableView!
-    var datas: [Story] = []
+    var dataList:[[Story]] = []
     var cycleView: ZCycleView!
     var top_storys:[TopStory] = []
     var top_titles:[String] = []
@@ -78,9 +78,7 @@ class HomeVC: UITableViewController {
     }
     
     func loadMore() {
-        OperationQueue.main.addOperation {
-            self.tableView.endLoadMore(isNoMoreData: true)
-        }
+        self.loadMoreMethod()
     }
     
 
@@ -93,12 +91,12 @@ class HomeVC: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return self.dataList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return datas.count
+        return self.dataList[section].count
     }
     
     func setDataAndRefresh(url:String,is_cover_page:Bool) {
@@ -111,9 +109,10 @@ class HomeVC: UITableViewController {
         GetData(url: self.refresh_url, completion: {
             (json) in
             let data = json! as! NSDictionary
+            self.dataList = []
             if self.is_cover_page{
                 let storys = StoryList(fromDictionary: data)
-                self.datas = storys.stories
+                self.dataList.append(storys.stories)
                 self.top_storys = storys.topStories
                 self.top_images = []
                 self.top_titles = []
@@ -129,14 +128,12 @@ class HomeVC: UITableViewController {
                 }
             }else{
                 let themes_storys = ThemeList(fromDictionary: data)
-                self.datas = themes_storys.stories
+                self.dataList.append(themes_storys.stories)
                 self.title = themes_storys.name
                 OperationQueue.main.addOperation {
                     self.title = themes_storys.name
                     self.tableView.sectionHeaderHeight = 0
-//                    let view = UIView(frame: .zero)
                     self.tableView.tableHeaderView = nil
-//                    self.cycleView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: 0.0000001)
                 }
             }
             OperationQueue.main.addOperation {
@@ -151,14 +148,66 @@ class HomeVC: UITableViewController {
             }
         })
     }
+    
+    func loadMoreMethod()  {
+        var url:String!
+        if is_cover_page {
+            OperationQueue.main.addOperation {
+                self.tableView.endLoadMore(isNoMoreData: true)
+            }
+            return
+        }else{
+            let id = "\(self.dataList.last?.last?.id ?? -1)"
+            if id == "-1" {
+                OperationQueue.main.addOperation {
+                    self.tableView.endLoadMore(isNoMoreData: true)
+                }
+                return
+            }
+            url = self.refresh_url+"/before/"+id
+            print(url!)
+        }
+        GetData(url: url!, completion: {
+            (json) in
+            let data = json! as! NSDictionary
+            var is_no_more_data:Bool = false
+            if self.is_cover_page{
+                let storys = StoryList(fromDictionary: data)
+                let story = storys.stories
+                if let data = story, data.count>0 {
+                    self.dataList.append(data)
+                }else{
+                   is_no_more_data = true
+                }
+            }else{
+                let themes_storys = ThemeList(fromDictionary: data)
+                let story = themes_storys.stories
+                if let data = story, data.count>0 {
+                    self.dataList.append(data)
+                }else{
+                    is_no_more_data = true
+                }
+            }
+            OperationQueue.main.addOperation {
+                if !is_no_more_data{
+                    self.tableView.reloadData()
+                    self.refreshControl?.endRefreshing()
+                }
+                self.tableView.endLoadMore(isNoMoreData: is_no_more_data)
+            }
+        }, fail: {
+            OperationQueue.main.addOperation {
+                self.noticeError("加载失败", autoClear: true, autoClearTime: 3)
+                self.tableView.endLoadMore(isNoMoreData: true)
+            }
+        })
+    }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let story = datas[indexPath.row]
+        let story = self.dataList[indexPath.section][indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "homeCell", for: indexPath) as! HomeCell
         cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-//        cell.layoutMargins.left = 15
-//        cell.layoutMargins.right = 15
         cell.preservesSuperviewLayoutMargins = false
         if let images = story.images, images.count>0{
             let url = URL(string: story.images[0])!
@@ -176,8 +225,6 @@ class HomeVC: UITableViewController {
         cell.title.numberOfLines = 2
         cell.title.text = story.title
     
-        // Configure the cell...
-
         return cell
     }
     
@@ -185,7 +232,7 @@ class HomeVC: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         
-        let story = self.datas[indexPath.row]
+        let story = self.dataList[indexPath.section][indexPath.row]
         
         self.performSegue(withIdentifier: "showDetail", sender: story.id!)
     }

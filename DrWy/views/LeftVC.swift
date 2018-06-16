@@ -36,7 +36,7 @@ class LeftVC: UIViewController {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 45))
         let rightButton =  UIButton(type: .custom)
         rightButton.setImage(UIImage(named: "Menu_Enter"), for: .normal)
-        rightButton.frame = CGRect(x: headerView.center.x+40-25/2.0, y: headerView.center.y-25/2.0, width: 25, height:25)
+        rightButton.frame = CGRect(x: headerView.center.x+40-22/2.0, y: headerView.center.y-22/2.0, width: 22, height:22)
         let homeButton = UIButton(type: .custom)
         homeButton.setImage(UIImage(named: "Menu_Icon_Home"), for: .normal)
         homeButton.frame = CGRect(x: 30, y: headerView.center.y-25/2.0, width: 25, height:25)

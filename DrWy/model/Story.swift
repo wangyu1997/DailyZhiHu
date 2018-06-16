@@ -30,7 +30,7 @@ struct Story{
 	 */
 	func toDictionary() -> NSDictionary
 	{
-		var dictionary = NSMutableDictionary()
+        let dictionary = NSMutableDictionary()
 		if id != nil{
 			dictionary["id"] = id
 		}
